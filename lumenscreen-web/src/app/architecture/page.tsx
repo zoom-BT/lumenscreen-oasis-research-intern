@@ -8,11 +8,8 @@ export default function ArchitecturePage() {
     <article className="arch">
       <header className="arch__head">
         <h1>Conception</h1>
-        <p>
-          Quatre étages séparés, du socle joblib jusqu’au navigateur. L’air
-          entre les marches montre la profondeur. Cliquer une plaque ouvre son
-          dossier.
-        </p>
+        <p>Quatre étages, du joblib jusqu’au navigateur.</p>
+        <p>Un clic ouvre le dossier de la couche.</p>
       </header>
 
       <ArchitectureScene />

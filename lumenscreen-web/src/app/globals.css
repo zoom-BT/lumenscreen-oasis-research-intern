@@ -487,7 +487,7 @@ input[type="number"] {
 
 .arch__head {
   max-width: 40rem;
-  margin: 0 0 0.75rem;
+  margin: 0 0 1.35rem;
   text-align: left;
   position: relative;
   z-index: 2;
@@ -498,27 +498,32 @@ input[type="number"] {
   margin: 0;
 }
 
+.arch__head p + p {
+  margin-top: 0.45rem;
+}
+
 .arch3d {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 18.5rem;
   gap: 1.25rem 1.75rem;
-  align-items: stretch;
+  align-items: start;
   margin: 0 0 2.5rem;
   position: relative;
   z-index: 1;
 }
 
 .scene {
-  --w: 12.5rem;
-  --h: 5.8rem;
-  --step-x: 4.6rem;
-  --step-z: 4.55rem;
+  --w: 13.6rem;
+  --h: 6.2rem;
+  --step-x: 5.1rem;
+  --step-z: 7.15rem;
+  --t: 1.25rem;
   width: 100%;
-  min-height: 18.5rem;
-  padding: 6.5rem 0 0.4rem;
+  min-height: 23rem;
+  padding: 6.5rem 0 0.6rem;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   perspective: 1600px;
   perspective-origin: 50% 50%;
   overflow: visible;
@@ -532,11 +537,9 @@ input[type="number"] {
   transform-style: preserve-3d;
   transform-origin: 50% 50%;
   transform: rotateX(46deg) rotateZ(-26deg);
-  animation: stack-in 0.9s ease both;
 }
 
 .slab {
-  --t: 1.05rem;
   appearance: none;
   border: 0;
   padding: 0;
@@ -571,14 +574,14 @@ input[type="number"] {
   background: var(--face);
   transform: translateZ(var(--t));
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--ink) 14%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--ink) 12%, transparent),
     0.35rem 0.85rem 1.4rem rgba(20, 32, 43, 0.22);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
   gap: 0.2rem;
-  padding: 0.75rem 0.95rem;
+  padding: 0.7rem 0.9rem;
   text-align: left;
 }
 
@@ -600,7 +603,7 @@ input[type="number"] {
   height: var(--h);
   right: 0;
   top: 0;
-  background: color-mix(in srgb, var(--face) 62%, #14202b);
+  background: var(--face);
   transform: rotateY(-90deg) translateZ(0);
   transform-origin: right center;
 }
@@ -610,7 +613,7 @@ input[type="number"] {
   height: var(--t);
   left: 0;
   bottom: 0;
-  background: color-mix(in srgb, var(--face) 48%, #14202b);
+  background: var(--face);
   transform: rotateX(90deg) translateZ(0);
   transform-origin: center bottom;
 }
@@ -789,12 +792,8 @@ code {
     gap: 1rem;
   }
 
-  .scene {
-    min-height: 16rem;
-  }
-
   .stack {
-    transform: rotateX(46deg) rotateZ(-26deg) scale(0.78);
+    transform: rotateX(46deg) rotateZ(-26deg) scale(0.82);
   }
 }
 

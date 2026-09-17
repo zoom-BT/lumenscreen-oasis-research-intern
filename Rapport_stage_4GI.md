@@ -1,4 +1,4 @@
-# Rapport de stage 4GI — brouillon
+# Rapport de stage research intern, brouillon
 
 Fichier de travail. Plus tard : `memoirthesis.tex` + `memoirthesis.pdf` à côté.
 
@@ -12,7 +12,7 @@ Fichier de travail. Plus tard : `memoirthesis.tex` + `memoirthesis.pdf` à côt�
 
 | | |
 |---|---|
-| Genre | Rapport de stage **pré-ingénieur** (4GI), registre recherche UMMISCO (Nassair), pas un mémoire |
+| Genre | Rapport de stage **research intern**, registre recherche UMMISCO (Nassair), pas un mémoire |
 | Source du sujet | Courriel de **TSOPZE Norbert** (`tsopze.norbert@gmail.com`), 24 juillet 2026, à Bernard Fongang, avec copie à Balbino et Pr Melatagia. Titre officiel ci-dessous. Première consigne : repérer les datasets en ligne ; signaler si inaccessibles. |
 | Cœur | **Partie I** — ce sujet officiel. Livrable atteint = plan d’analyse (annexe). Extraets NACC/ADNI/FHS confidentiels, en attente d’accès |
 | Complément | **Partie II** — Detecting Early Alzheimer’s. Données **publiques** OASIS-2. Baseline : [notebook hyunseokc](https://www.kaggle.com/code/hyunseokc/detecting-early-alzheimer-s/notebook). **Contribution** : autres modèles + démo sur interface dédiée |
@@ -464,7 +464,7 @@ L’interface (**Lumenscreen**) n’est pas un dispositif clinique. Elle a deux 
 
 Parcours vérifié : protocole et disclaimer → formulaire (aucun champ CDR) → score binaire et importances → prévention → architecture (quatre marches, dossier latéral).
 
-Lancer, depuis `Rapport_Stage_MCI` : `python -m uvicorn lumenscreen.main:app --host 127.0.0.1 --port 8000`, puis `npm run dev` dans `lumenscreen-web`. Site : `http://127.0.0.1:3000`. Code source : [github.com/zoom-BT/lumenscreen-oasis-4gi](https://github.com/zoom-BT/lumenscreen-oasis-4gi).
+Lancer, depuis `Rapport_Stage_MCI` : `python -m uvicorn lumenscreen.main:app --host 127.0.0.1 --port 8000`, puis `npm run dev` dans `lumenscreen-web`. Site : `http://127.0.0.1:3000`. Code source : [github.com/zoom-BT/lumenscreen-oasis-research-intern](https://github.com/zoom-BT/lumenscreen-oasis-research-intern).
 
 Sur les deux exemples OASIS-2 (visite index) : **OAS2_0001** → Nondemented (p = 0,43) ; **OAS2_0002** → Demented + Converted (p = 0,86), huit importances (MMSE en tête). Viewport des captures : 1280 × 900.
 

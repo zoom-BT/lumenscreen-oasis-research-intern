@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     template: "%s | Lumenscreen",
   },
   description:
-    "Démo diagnostic OASIS-2. Outil pédagogique UMMISCO / stage 4GI. Non clinique.",
+    "Démo diagnostic OASIS-2. Outil pédagogique UMMISCO / research intern. Non clinique.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

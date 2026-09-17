@@ -1,5 +1,5 @@
 """
-OASIS-2 experiments for the 4GI internship report (part II).
+OASIS-2 experiments for the research intern report (part II).
 
 Inspired by hyunseokc Detecting Early Alzheimer's, aligned with the
 internship SOTA: logistic, SVM, trees, XGBoost.

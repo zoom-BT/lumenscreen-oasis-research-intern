@@ -23,7 +23,7 @@ async def lifespan(_app: FastAPI):
 
 app = FastAPI(
     title="Lumenscreen",
-    description="API diagnostic OASIS-2 — UMMISCO / stage 4GI. Non clinique.",
+    description="API diagnostic OASIS-2. UMMISCO / research intern. Non clinique.",
     version="0.1.0",
     lifespan=lifespan,
 )

@@ -1,6 +1,6 @@
 # Rapport de stage -- Conversion MCI vers demence
 
-Template ENSP recale en **rapport de stage de recherche**. Code et démo Lumenscreen : [https://github.com/zoom-BT/lumenscreen-oasis-4gi](https://github.com/zoom-BT/lumenscreen-oasis-4gi).
+Template ENSP recale en **rapport de stage de recherche**. Code et démo Lumenscreen : [https://github.com/zoom-BT/lumenscreen-oasis-research-intern](https://github.com/zoom-BT/lumenscreen-oasis-research-intern).
 
 ## Compiler
 

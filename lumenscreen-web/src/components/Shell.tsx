@@ -19,7 +19,7 @@ export function Shell({ children }: ShellProps) {
           <Link href="/" className="wordmark">
             Lumenscreen
           </Link>
-          <p className="mast__lab">UMMISCO, OASIS-2, stage 4GI</p>
+          <p className="mast__lab">UMMISCO, OASIS-2, research intern</p>
         </div>
         <Nav />
       </header>

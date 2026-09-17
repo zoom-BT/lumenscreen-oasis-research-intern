@@ -1,0 +1,69 @@
+\chapter*{Introduction Générale}
+\label{chap:intro}
+\addstarredchapter{Introduction Générale}
+\markboth{Introduction}{}
+\adjustmtc
+
+\section*{CONTEXTE GÉNÉRAL}
+\initial{L}e vieillissement des populations place la démence au centre des priorités de santé publique. Le trouble cognitif léger (\ac{MCI}) désigne un déficit cognitif réel, souvent mnésique, alors que l'autonomie quotidienne reste globalement préservée. Sans intervention, de l'ordre de 15~\% des personnes en MCI convertissent vers une démence de type Alzheimer en deux ans \cite{chen2024probast,petersen2018mci}. Prédire \emph{qui} convertira dans une fenêtre de 2 à 5 ans est à la fois un problème d'enrichissement d'essais cliniques et un problème de triage.
+
+Les grandes cohortes du vieillissement -- \ac{NACC} \ac{UDS}, \ac{ADNI}, \ac{FHS} -- accumulent des mesures répétées cliniques, cognitives, d'imagerie, génétiques et de biomarqueurs fluides. L'intelligence artificielle est ici un outil d'infrastructure, pas un ornement. Le \ac{CARD} du \ac{NIH} lui assigne quatre fonctions : harmoniser des sources hétérogènes, détecter des motifs subtils, prédire des issues futures, et prioriser des cibles \cite{card2024ai}. C'est exactement le langage du présent stage.
+
+\begin{itemize}
+\item Sur le plan clinique, un AUC interne élevé sur une seule cohorte ne dit rien de la transportabilité vers un autre site, une autre ancestralité ou un autre calendrier de visites.
+\item Sur le plan méthodologique, un partitionnement par visite fuit l'identité du patient en IRM longitudinale et gonfle les performances vers 0,95 et plus \cite{yagis2023split,diagnostics2025leakage}.
+\item Sur le plan opérationnel, TEP et ponction lombaire sont rares ; jeter les cas incomplets sélectionne les bilans les plus lourds et biaise l'échantillon \cite{park2025moira}.
+\end{itemize}
+
+Ce stage de recherche de deux mois (24 juillet -- 24 septembre 2026) s'inscrit dans une collaboration UMMISCO -- Glenn Biggs Institute (UT Health San Antonio), sur le sujet proposé par Pr Tsopze et cadré par Dr Fongang : \emph{Multimodal prediction of MCI-to-dementia conversion across NACC, ADNI, and Framingham}.
+
+\section*{PROBLEMATIQUE}
+La littérature multimodale sait déjà classer la maladie d'Alzheimer \emph{sur ADNI}. Une revue de 2025 montre que la conversion MCI $\rightarrow$ démence est l'objectif le plus fréquent, que plus de la moitié des modèles rapportent une AUC $>$ 0,8, que 66,7~\% sont développés sur ADNI et que seulement 10,1~\% sont validés en externe \cite{xia2025scoping}. Une évaluation \ac{PROBAST} de 2024 trouve une AUC moyenne de 0,87 mais un risque de biais élevé ou incertain et presque aucun test externe \cite{chen2024probast}.
+
+Le trou n'est donc pas << un modèle plus profond >>. C'est un protocole \emph{honnête} : phénotypes alignés entre cohortes, split au niveau participant, conservation des profils incomplets, calibration et \ac{DCA} en plus de l'AUC, interprétation (\ac{SHAP}) et équité par sous-groupes, puis identification d'un paquet de données encore utile lorsque l'imagerie ou les biomarqueurs manquent.
+
+\section*{QUESTION DE RECHERCHE}
+\begin{bidentidad}{Question}
+    \centering
+    \textbf{Comment estimer, sans fuite longitudinale et avec une validation externe, le risque de conversion MCI $\rightarrow$ démence à 2 et 5 ans à partir de données multimodales incomplètes issues de NACC, ADNI et Framingham, et quel paquet de données minimal reste cliniquement utile ?}
+\end{bidentidad}
+
+\section*{HYPOTHESE}
+Un modèle multimodal au niveau participant, entraîné sur une cohorte et testé sur une autre, conservera une discrimination et une calibration plus stables que des modèles cas-complets partitionnés par visite. Les variables cliniques et cognitives formeront le paquet minimal utile ; l'IRM et les biomarqueurs amélioreront davantage la calibration que la discrimination, sur le sous-ensemble qui en dispose.
+
+\section*{OBJECTIFS DU RAPPORT}
+Les objectifs de ce stage, alignés sur le plan d'analyse soumis aux encadrants, sont au nombre de trois :
+
+\begin{itemize}[label=\ding{42}, font=\large \color{darkorange}]
+\item \textbf{Aim 1.} Construire une table d'analyse sans fuite et un phénotype de conversion aligné (MCI index, démence, horizons 2 et 5 ans) sur NACC, ADNI et Framingham.
+\item \textbf{Aim 2.} Entraîner et comparer des modèles pronostiques (logistique, Cox, forêts aléatoires, XGBoost) avec fusion tardive et gestion des modalités manquantes, sans suppression des cas incomplets.
+\item \textbf{Aim 3.} Valider en externe, calibrer, appliquer la \ac{DCA} et le \ac{SHAP}, contrôler l'équité, et classer des paquets emboîtés (clinique $\rightarrow$ +cognitif $\rightarrow$ +imagerie $\rightarrow$ +biomarqueurs/génétique) pour identifier le paquet minimal.
+\end{itemize}
+
+\section*{MÉTHODOLOGIE}
+La démarche, inspirée du canevas de plan d'analyse du laboratoire Fongang et de la force argumentative des mémoires de recherche UMMISCO/ENSPY, combine :
+
+\begin{itemize}[label=\ding{42}, font=\large \color{darkorange}]
+\item La compréhension des concepts (MCI, \ac{CDR}, cadre \ac{ATN}, fuites, fusion multimodale).
+\item Une revue ciblée des solutions existantes (revues 2024--2026, CARD, Xue et al.\ 2024, MOIRA 2025).
+\item La rédaction d'un protocole figé \emph{avant} les modèles (plan d'analyse).
+\item L'inventaire des extraits fournis par les encadrants et le verrouillage des phénotypes.
+\item L'implémentation des modèles 1--4 et l'évaluation externe, dans la limite des deux mois et des DUA.
+\end{itemize}
+
+\section*{PLAN DU RAPPORT}
+
+La suite de ce rapport comprend trois chapitres, suivis d'une conclusion générale :
+\begin{itemize}
+\item \textbf{Chapitre 1 : Concepts généraux et état de l'art.}
+Définitions (MCI, démence, \ac{ATN}, fuites, fusions) ; travaux existants ; bilan et positionnement.
+
+\item \textbf{Chapitre 2 : Données et méthodologie.}
+Cohortes, variables, phénotypes à figer, modèles emboîtés, métriques, contrôle des fuites.
+
+\item \textbf{Chapitre 3 : Travail réalisé, limites et perspectives.}
+Livrables des deux mois, hypothèses sur les extraits, ce qui reste hors scope (CNN 3D, données africaines).
+
+\item \textbf{Conclusion générale.}
+Rappel de la question, de la démarche, des apports et des limites.
+\end{itemize}

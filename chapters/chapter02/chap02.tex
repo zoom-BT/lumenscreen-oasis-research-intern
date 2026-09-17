@@ -1,0 +1,78 @@
+\let\textcircled=\pgftextcircled
+\chapter{Concepts généraux et état de l'art}
+\label{chap:background}
+
+\initial{D}\textit{ans ce chapitre, nous introduisons les notions nécessaires à la lecture du protocole : trouble cognitif léger, démence, biomarqueurs \ac{ATN}, fuites de données, et stratégies de fusion multimodale. Nous passons ensuite en revue les travaux existants, puis nous dressons un bilan et un positionnement.}
+
+\newpage    
+
+\section{Généralités}
+
+\subsection{Trouble cognitif léger et démence}
+
+Le \ac{MCI} désigne un déficit cognitif objectivable, plus marqué qu'un oubli d'âge, alors que les activités quotidiennes restent globalement possibles. La démence, à l'inverse, s'accompagne d'une perte d'autonomie. Dans ce projet, le \ac{MCI} est le \emph{point de départ} (visite index) et la démence est l'\emph{issue ultérieure}, jamais le diagnostic de la même visite.
+
+Le \ac{CDR} (Clinical Dementia Rating) est l'instrument de stadification le plus cité dans NACC et ADNI. En règle empirique : CDR global 0 (cognition normale), 0,5 (souvent compatible avec un MCI), $\geq 1$ (démence). Le CDR-SB (somme des boîtes) est plus granulaire. Ces scores peuvent servir de \emph{prédicteurs} du risque futur ; les utiliser pour prédire le CDR de la \emph{même} visite est une fuite de cible \cite{plos2026leakage}.
+
+Les batteries brèves (\ac{MMSE}, \ac{MoCA}) et les scores de domaines (mémoire, exécutif, langage, attention) forment le cœur du paquet clinique--cognitif. Le \ac{FAQ} mesure la fonction dans la vie quotidienne.
+
+\subsection{Cadre A/T/N}
+
+Le cadre de recherche NIA-AA 2018 groupe les biomarqueurs en amyloïde (\textbf{A} : \ac{PET} amyloïde, $\mathrm{A}\beta$ du \ac{CSF} ou du plasma), tau pathologique (\textbf{T} : p-tau, \ac{PET} tau) et neurodegeneration (\textbf{N} : t-tau, atrophie IRM, hypométabolisme FDG) \cite{jack2018atn}. Pour ce stage, il suffit de retenir le \emph{rôle} de chaque famille : l'IRM volumétrique (hippocampe, cortex médio-temporal) est un marqueur \textbf{N}, pas la preuve des plaques ; l'\ac{APOE} $\varepsilon 4$ est un facteur de risque génétique, pas un diagnostic.
+
+Les modalités chères ou invasives (TEP, LCR) sont structurellement plus rares que la clinique et l'IRM. Filtrer sur la complétude introduit un biais de sélection \cite{park2025moira}.
+
+\subsection{Fuites de données}
+
+Dans les cohortes longitudinales, un split \emph{par visite} place deux examens du même sujet dans l'entraînement et le test. Le réseau apprend alors une signature d'identité (géométrie crânienne, empreinte de scanner) plutôt que des marqueurs de conversion \cite{yagis2023split,yagis2021slice}. Les études à haut risque de fuite rapportent souvent des accuracies $\geq 95$~\% sur de petits effectifs ; les protocoles au niveau sujet, avec test externe, se situent plutôt autour de 80--85~\% \cite{diagnostics2025leakage}.
+
+Une seconde fuite est le prétraitement global : imputation, normalisation, ACP ou ComBat ajustés sur tout le fichier, y compris le test. La règle est : tout paramètre est appris sur l'entraînement seul.
+
+\subsection{Fusion multimodale}
+
+Clinique, génétique et IRM ne vivent pas à la même échelle (un score FAQ contre $10^3$--$10^5$ descripteurs d'image). Trois jonctions existent :
+
+\begin{itemize}[label=\ding{42}, font=\large \color{darkorange}]
+\item \textbf{Fusion précoce} : concaténation des descripteurs. Simple, mais l'IRM noie \ac{APOE} et FAQ (biais de dimensionnalité).
+\item \textbf{Fusion tardive} : un modèle par modalité, puis combinaison des probabilités (vote, stacking). Chaque modalité garde son échelle ; les interactions de bas niveau sont perdues.
+\item \textbf{Fusion intermédiaire} : espaces latents alignés (attention croisée, GNN, VAE). Plus puissante, plus coûteuse.
+\end{itemize}
+
+Pour deux mois, la fusion tardive est le défaut. La fusion intermédiaire n'est tentée que si les baselines sont stables.
+
+\section{État de l'art}
+
+\subsection{Ce que les modèles existants font déjà}
+
+La conversion MCI $\rightarrow$ démence Alzheimer est l'objectif le plus fréquent des modèles multimodaux de la MA \cite{xia2025scoping}. Plus de la moitié rapportent une AUC $>$ 0,8. Cette performance n'est plus une contribution : 66,7~\% des modèles sont entraînés sur \ac{ADNI} et 10,1~\% seulement sont validés en externe \cite{xia2025scoping}. Chen et al.\ \cite{chen2024probast} confirment une AUC moyenne de 0,87, un biais méthodologique élevé, et deux modèles seulement validés hors de la cohorte d'apprentissage. Les associations mesurées dans ADNI (clinique, haute éducation) ne se transportent pas automatiquement vers un échantillon communautaire \cite{gianattasio2021aric}.
+
+\subsection{Trois ressources assignées par Dr Fongang}
+
+\paragraph{CARD/NIH.} L'IA harmonise, détecte, prédit et priorise \cite{card2024ai}. Le présent protocole couvre surtout l'harmonisation, la prédiction à 2--5 ans, et la priorisation via le paquet minimal.
+
+\paragraph{Xue, Kolachalama et al.\ (\emph{Nature Medicine}, 2024).} Transformer multimodal sur 51~269 participants et neuf cohortes, robuste aux modalités manquantes, test externe sur ADNI et Framingham, AUROC 0,94 pour cognition normale / MCI / démence \cite{xue2024natmed}. \textbf{Ce que nous prenons} : données incomplètes, multi-cohortes, FHS comme test populationnel. \textbf{Ce que nous ne copions pas} : leur issue est un diagnostic différentiel \emph{actuel}, pas un risque de conversion prospectif.
+
+\paragraph{Park et al.\ (MOIRA, 2025).} Sur ROSMAP, seuls 86/748 échantillons ont les cinq omiques ; garder l'union des profils incomplets bat l'intersection des cas complets (accuracy 0,92) \cite{park2025moira}. Le paquet minimal de ce stage est l'analogue clinique de cette ablation.
+
+\subsection{Évaluation au-delà de l'AUC}
+
+La calibration (pente, graphique, score de Brier) demande si un risque prédit de 30~\% correspond à 30~\% d'événements observés. La \ac{DCA} compare le bénéfice net du modèle aux stratégies << traiter tout le monde >> et << ne traiter personne >> \cite{chen2024probast,cns2024ptau}. Le \ac{SHAP} est devenu standard pour expliquer les conversions MCI \cite{chun2022shap}. L'équité (âge, sexe, éducation, ancestralité) est beaucoup plus rarement rapportée, alors qu'ADNI sous-représente les groupes ethnoculturels et peu éduqués \cite{ashford2022adni}.
+
+\section{Bilan et positionnement}
+
+\begin{center}
+\begin{tabular}{p{0.42\linewidth}p{0.48\linewidth}}
+\hline
+\textbf{Fait de la littérature} & \textbf{Position de ce stage} \\
+\hline
+Conversion MCI $\rightarrow$ démence = tâche n$^\circ$1, AUC souvent $>$ 0,8 & Ce n'est plus l'objectif de publication interne \\
+Deux tiers des modèles sur ADNI, $\sim$10~\% validés ailleurs & Entraîner et tester à travers NACC, ADNI, Framingham \\
+Fuites par visite et labels cibles & Split participant ; features $\leq$ visite index \\
+Kolachalama : multimodal, manques, multi-sites & Même discipline, \emph{autre} issue (risque 2--5 ans) \\
+MOIRA : l'incomplet bat le cas complet & Paquets emboîtés, pas de suppression primaire \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{0.4cm}
+\noindent\textbf{Phrase de synthèse.} La littérature sait classer l'Alzheimer sur ADNI. Elle n'a pas encore livré, sur NACC / ADNI / Framingham, un modèle de conversion à 2--5 ans sans fuite, validé en externe, conscient des modalités manquantes, avec un paquet de données documenté.

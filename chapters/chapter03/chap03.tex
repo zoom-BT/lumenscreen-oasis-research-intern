@@ -1,0 +1,92 @@
+\let\textcircled=\pgftextcircled
+\chapter{Données et méthodologie}
+\label{chap:contrib}
+
+\initial{A}\textit{fin de répondre à la question de recherche sans pêcher les résultats, le protocole est figé avant les modèles. Ce chapitre reprend le plan d'analyse : cohortes, variables, phénotypes, modèles emboîtés, fuites, et métriques.}
+
+\newpage
+
+\section{Organisme d'accueil et cadre du stage}
+
+Le stage se déroule à l'\ac{UMMISCO} (Université de Yaoundé I), sous la direction de Pr Norbert Tsopze, en collaboration avec Pr Paulin Melatagia Yonta et Dr Bernard Fongang (Glenn Biggs Institute, UT Health San Antonio). La durée est de deux mois (24 juillet -- 24 septembre 2026). Le laboratoire Fongang exige un plan d'analyse (background, aims, design, analyse, résultats attendus, calendrier) avant toute exploitation des extraits. C'est le livrable méthodologique central du mois 1.
+
+\section{Cohortes et rôles}
+
+\textbf{Hypothèse de travail de cette version} : les extraits NACC, ADNI et Framingham sont détenus par l'équipe d'encadrement et utilisés sous les DUA du laboratoire. Aucune redistribition au niveau participant. OASIS-3 / EPAD ne sont pas des cohortes d'inférence.
+
+\begin{center}
+\begin{tabular}{p{0.22\linewidth}p{0.38\linewidth}p{0.32\linewidth}}
+\hline
+\textbf{Cohorte} & \textbf{Rôle} & \textbf{Contrainte} \\
+\hline
+NACC UDS & Entraînement clinique / un pli externe & Biais d'adressage ADRC \\
+ADNI & Entraînement multimodal / un pli externe & Haute éducation, faible diversité, effets de scanner \\
+Framingham & Validation externe en population & Ancestralité historiquement limitée ; labels moins << cliniques >> \\
+            \hline
+        \end{tabular}
+\end{center}
+
+\section{Unité d'analyse et contrôle des fuites}
+
+Une ligne analytique = un participant à la visite index MCI, avec des caractéristiques observées \emph{à cette visite ou avant}. Toutes les visites d'un même participant restent dans la même partition (entraînement / validation interne / test). Pas de tirage aléatoire par visite. Imputation, mise à l'échelle, sélection de variables et harmonisation de type ComBat sont ajustées sur l'entraînement seul. Un journal consigne chaque choix de prétraitement.
+
+Les participants à couverture partielle restent dans l'analyse. L'entraînement peut masquer des modalités (\emph{modality dropout}) afin que l'inférence n'exige pas TEP ou LCR. Une TEP imputée de manière générative, si elle était tentée, serait étiquetée comme représentation reconstruite, pas comme biomarqueur mesuré.
+
+\section{Phénotypes (à figer avant la modélisation)}
+
+\begin{center}
+\begin{tabular}{p{0.28\linewidth}p{0.62\linewidth}}
+\hline
+\textbf{Construit} & \textbf{Règle de travail} \\
+            \hline
+Index MCI & Première visite MCI, indemne de démence : statut clinicien NACC = MCI ; diagnostic ADNI = MCI ; équivalent FHS (batterie + revue clinique / CDR selon manuels). \\
+Démence & Première visite ultérieure : démence NACC ; MA/démence ADNI ; démence toutes causes FHS. Décès et pertes de suivi : censure en Cox ; non-événement à l'horizon en binaire, avec sensibilités. \\
+Conversion 2 ans & Démence à index$+2$ ans ou avant. Suivi $< 2$ ans sans démence : exclus du binaire 2 ans, conservés en Cox. \\
+Conversion 5 ans & Même règle à 5 ans. \\
+            \hline
+        \end{tabular}
+\end{center}
+
+Ces règles sont \emph{lockées} avec les encadrants sur les dictionnaires d'extraits. Elles ne sont plus retouchées pour améliorer une AUC.
+
+\section{Variables et modèles emboîtés}
+
+\paragraph{Prédicteurs cliniques.} Âge à l'index, sexe, éducation, risque vasculaire (hypertension, diabète, tabac, IMC, AVC/AIT), médicaments, FAQ.
+
+\paragraph{Prédicteurs cognitifs.} MMSE ou MoCA, CDR global et CDR-SB, scores de domaines.
+
+\paragraph{Imagerie.} Résumés IRM d'abord (volumes hippocampiques / médio-temporaux, épaisseur corticale). TEP sur le sous-ensemble disponible.
+
+\paragraph{Biomarqueurs / génétique.} $\mathrm{A}\beta$, t-tau, p-tau (LCR ou plasma) ; APOE $\varepsilon 4$.
+
+\paragraph{Covariables d'ajustement.} Âge, âge$^2$, sexe, éducation. Modèles secondaires : risque vasculaire, médicaments, site/scanner.
+
+\begin{itemize}[label=\ding{42}, font=\large \color{darkorange}]
+\item \textbf{Modèle 1} = paquet clinique--cognitif $+$ âge $+$ âge$^2$ $+$ sexe $+$ éducation
+\item \textbf{Modèle 2} = modèle 1 $+$ risque vasculaire $+$ médicaments
+\item \textbf{Modèle 3} = modèle 2 $+$ résumés IRM
+\item \textbf{Modèle 4} = modèle 3 $+$ biomarqueurs / APOE disponibles (conscient des manques)
+\end{itemize}
+
+Exclusion : pas d'index MCI définissable, déjà dément à la première visite utilisable, âge ou sexe manquant. On n'exclut \emph{pas} pour absence d'IRM, TEP, LCR ou génétique. L'analyse cas-complets n'est qu'un contrôle de sensibilité.
+
+\section{Modèles pronostiques et fusion}
+
+Conversion binaire à 2 et 5 ans : régression logistique, forêt aléatoire, XGBoost. Délai jusqu'à la démence : Cox (survie en arbres si la baseline Cox est instable). Fusion tardive par défaut (stacking ou moyenne pondérée des probabilités). Concaténation précoce d'IRM brute évitée. CNN 3D ou attention croisée seulement si les résumés tabulaires saturent et si le temps le permet.
+
+\section{Évaluation}
+
+\begin{itemize}[label=\ding{42}, font=\large \color{darkorange}]
+\item Discrimination : AUC (binaire), C-index (survie).
+\item Calibration : pente, ordonnée à l'origine, graphiques.
+\item Utilité : \ac{DCA} aux seuils pertinents.
+\item Validation externe : NACC $\rightarrow$ ADNI, ADNI $\rightarrow$ NACC, (NACC ou ADNI) $\rightarrow$ Framingham.
+\item Interprétation : \ac{SHAP} sur les modèles tabulaires.
+\item Équité : AUC et calibration par âge, sexe, éducation, ancestralité si les effectifs le permettent.
+\end{itemize}
+
+Le paquet minimal (Aim 3) est le plus petit modèle emboîté dont le bénéfice net externe reste au-dessus des courbes traiter-tout / ne-rien-traiter, avec une chute d'AUC modeste par rapport au modèle complet.
+
+\section{Résultats attendus (a priori)}
+
+Nous attendons un taux de conversion non négligeable dans NACC et ADNI, plus bas à Framingham, et une baisse de discrimination au transfert. Le paquet clinique--cognitif devrait retenir l'essentiel de l'utilité externe ; l'IRM améliorer calibration et ranking ; TEP/LCR/APOE aider le sous-ensemble qui en dispose. Le \ac{SHAP} devrait mettre en avant âge, mémoire, CDR-SB/FAQ, volume hippocampique et APOE $\varepsilon 4$ lorsqu'ils sont présents \cite{chun2022shap,xue2024natmed}. Nous n'attendons pas qu'une fusion profonde soit nécessaire pour répondre à la question du stage.

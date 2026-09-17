@@ -1,0 +1,12 @@
+% Dans la section des packages, vers la ligne ~350 (après \usepackage{latexsym})
+
+% --- BIBLIOGRAPHY SETUP ---
+% Commenter les lignes natbib existantes s'il y en a:
+%\usepackage[numbers,sort&compress]{natbib} % Commenté car biblatex sera utilisé
+
+% Configuration de Biblatex pour les catégories
+\usepackage[backend=biber,style=numeric,sortcites=true,maxbibnames=5,doi=false,url=true,eprint=false]{biblatex}
+% Définit le fichier .bib à utiliser (assurez-vous que le chemin est correct)
+\addbibresource{chapters/biblio/biblio.bib} % <--- Double-vérifiez ce chemin !
+
+% ... (reste de vos packages) ...

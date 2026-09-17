@@ -1,0 +1,60 @@
+\let\textcircled=\pgftextcircled
+\chapter{Travail réalisé, limites et perspectives}
+\label{chap:results}
+
+\initial{C}\textit{e chapitre distingue ce qui a été livré en deux mois de ce qui relève du protocole encore à exécuter sur les extraits, et énonce les limites honnêtes du stage.}
+
+\newpage 
+
+\section{Livrables du mois 1}
+
+Le mois 1 (24 juillet -- fin août 2026) a produit le socle scientifique et administratif, avant les modèles :
+
+\begin{itemize}[label=\ding{42}, font=\large \color{darkorange}]
+\item Cartographie de huit bases (NACC, ADNI, Framingham, OASIS-3, EPAD, AMYPAD, AIBL, UK Biobank) : modalités, volumes, DUA, délais, IRB.
+\item État de l'art sur la fusion multimodale et les modalités manquantes (présentations de travail).
+\item Revue de littérature ciblée : CARD/NIH, Xue--Kolachalama 2024, MOIRA 2025, fuites, PROBAST, calibration/\ac{DCA}, \ac{SHAP}.
+\item Plan d'analyse rédigé sur le canevas Fongang (anglais pour Dr Fongang, français pour le rapport interne), avec trois aims alignés et calendrier recalé sur le 24 juillet -- 24 septembre.
+\end{itemize}
+
+Ces pièces répondent à la consigne initiale : << commencer par trouver les jeux de données ; proposer un plan of analytics >>.
+
+\section{Calendrier réel (deux mois)}
+
+\begin{center}
+\begin{tabular}{p{0.55\linewidth}p{0.35\linewidth}}
+\hline
+\textbf{Tâche} & \textbf{Période} \\
+\hline
+Cartographie et voies d'accès & 24 jul.\ -- 7 août \\
+État de l'art fusion / manques & 8--20 août \\
+Revue CARD / MOIRA / Kolachalama & 21--25 août \\
+Brouillon du plan d'analyse & 25--26 août \\
+Plan final après commentaires & 1$^{\mathrm{er}}$ septembre \\
+Inventaire des extraits, lock phénotype & 26 août -- 3 septembre \\
+Table d'analyse et splits participant & 3--8 septembre \\
+Modèles 1--2 puis 3--4, calibration, DCA & 8--17 septembre \\
+Validation externe, SHAP, équité, paquet minimal & 17--21 septembre \\
+Rapport et restitution & 22--24 septembre \\
+\hline
+\end{tabular}
+\end{center}
+
+Le goulot n'est plus une file NACC/LONI/BioLINCC \emph{si} les extraits mentors sont effectivement disponibles. Sinon, la validation externe réaliste se réduit à NACC $\leftrightarrow$ ADNI, et Framingham est déclaré comme limite, pas comme échec.
+
+\section{Ce que ce rapport ne contient pas encore}
+
+À la date de rédaction, les tableaux démographiques (N MCI, taux de conversion à 2 et 5 ans, couverture IRM/TEP) restent vides : ils se remplissent \emph{après} inventaire des fichiers, pas par invention. Les AUC, C-index, courbes de calibration et \ac{DCA} empiriques seront insérés dès que les modèles 1--4 auront tourné sous DUA. Ce n'est pas un manquement de protocole : c'est la discipline même du plan d'analyse (pas de résultats avant phénotype locké).
+
+\section{Limites}
+
+\begin{itemize}[label=\ding{42}, font=\large \color{darkorange}]
+\item Durée de deux mois : pas de transformer type Kolachalama, pas de CNN 3D comme résultat principal.
+\item NACC/ADNI sont des échantillons cliniques ; Framingham est peu divers historiquement. Les données africaines, prévues comme test de transportabilité ultérieur, sont hors scope.
+\item L'équité ne peut être rapportée que si les variables et les effectifs de cellules existent.
+\item Le DUA est nominatif : le stagiaire doit être ajouté à l'accord du laboratoire le cas échéant.
+\end{itemize}
+
+\section{Perspectives}
+
+Une fois les extraits inventoriés : figer les codes MCI/démence avec les encadrants ; exécuter les modèles 1--4 ; publier le paquet minimal comme résultat principal, même si l'AUC interne est moins spectaculaire qu'un papier ADNI-only. À plus long terme : test de transportabilité sur données africaines harmonisées, dans le cadre AI-BOND.

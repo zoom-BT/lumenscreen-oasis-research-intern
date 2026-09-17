@@ -1,0 +1,27 @@
+{
+  "n_visit1": 150,
+  "n_nondemented": 72,
+  "n_demented": 64,
+  "n_converted": 14,
+  "n_positive_binary": 78,
+  "features": [
+    "sex_male",
+    "Age",
+    "EDUC",
+    "SES",
+    "MMSE",
+    "eTIV",
+    "nWBV",
+    "ASF"
+  ],
+  "excluded": [
+    "CDR",
+    "MRI ID",
+    "Hand",
+    "visits > 1"
+  ],
+  "split": "stratified 75/25, seed=42",
+  "note": "Une ligne par participant (visite 1). CDR exclu des pr\u00e9dicteurs.",
+  "best_model": "RandomForest",
+  "best_test_auc": 0.75
+}

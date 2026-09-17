@@ -1,0 +1,8 @@
+                precision    recall  f1-score   support
+
+   Nondemented       0.67      0.89      0.76        18
+Demented+Conv.       0.86      0.60      0.71        20
+
+      accuracy                           0.74        38
+     macro avg       0.76      0.74      0.73        38
+  weighted avg       0.77      0.74      0.73        38

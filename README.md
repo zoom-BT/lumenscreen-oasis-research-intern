@@ -2,6 +2,8 @@
 
 Template ENSP recale en **rapport de stage de recherche**. Code et démo Lumenscreen : [https://github.com/zoom-BT/lumenscreen-oasis-research-intern](https://github.com/zoom-BT/lumenscreen-oasis-research-intern).
 
+![Architecture 3D Lumenscreen : quatre étages (infrastructure, domaine, application, présentation) et dossier latéral](captures_demo/fig5_2e_architecture.png)
+
 ## Compiler
 
 Ouvrir `memoirthesis.tex` dans TeXstudio ou VS Code (LaTeX Workshop).

@@ -2,6 +2,8 @@
 
 Présentation App Router. L’API Python reste dans `../lumenscreen`.
 
+![Architecture 3D Lumenscreen](../captures_demo/fig5_2e_architecture.png)
+
 ```
 npm run dev
 ```
